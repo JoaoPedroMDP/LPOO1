@@ -1,40 +1,43 @@
 package L3;
 
+import java.util.Collection;
+import java.util.Scanner;
 import java.util.List;
 import java.util.ArrayList;
-import java.util.Scanner;
 
 public class EX2 {
-    private static List<Float> pegaValores(Integer limite){
+    private static List<Float> pegaValores(){
         Float parsed = 0f;
+        Boolean continua = true;
         List<Float> numeros = new ArrayList<Float>();
         String buffer;
         Scanner sc = new Scanner(System.in);
 
         do{
             buffer = sc.nextLine();
-            try{
-                parsed = Float.parseFloat(buffer);
-                numeros.add(parsed);
-                limite--;
-            }catch(NumberFormatException e){
-                System.out.println("Valor inválido, insira novamente: ");
+            if(buffer.equals("S")){
+                continua = false;
+            }else{
+                try{
+                    parsed = Float.parseFloat(buffer);
+                    numeros.add(parsed);
+                }catch(NumberFormatException e){
+                    System.out.println("Valor inválido, insira novamente");
+                }
             }
-        }while(limite > 0);
+        }while(continua);
 
         return numeros;
     }
 
-    public static void main(String[] args) {
-        List<Float> numeros = pegaValores(3);
-        Float soma = 0f;
-
-        for (Float num : numeros){
-            if(num %2 == 0){
-                soma += num;
-            }
+    public static void main(String args[]) {
+        List<Float> numeros = pegaValores();
+        Float media = 0f;
+        for (Float numero : numeros) {
+            media += numero;
         }
 
-        System.out.println("Soma: " + soma);
+        media = media/numeros.size();
+        System.out.println("Média: " + media);
     }
 }
