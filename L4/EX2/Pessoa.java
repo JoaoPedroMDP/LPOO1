@@ -1,4 +1,4 @@
-package L4.EX1;
+package L4.EX2;
 
 public class Pessoa{
     private String nome;
