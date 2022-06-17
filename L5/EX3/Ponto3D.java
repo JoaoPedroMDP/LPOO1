@@ -1,4 +1,4 @@
-package L4.EX3;
+package L5.EX3;
 
 public class Ponto3D{
     private Double x;
@@ -15,7 +15,7 @@ public class Ponto3D{
         this.intensidade = intensidade;
     }
 
-    public Double calculaDistancia(Ponto3D p){
+    protected Double calculaDistancia(Ponto3D p){
         return Math.sqrt(
             Math.pow(p.x - this.x, 2)+
             Math.pow(p.y - this.y, 2)+
@@ -23,19 +23,19 @@ public class Ponto3D{
         );
     }
 
-    public Double getX() {
+    protected Double getX() {
         return this.x;
     }
 
-    public void setX(Double x) {
+    private void setX(Double x) {
         this.x = x;
     }
 
-    public Double getY() {
+    private Double getY() {
         return this.y;
     }
 
-    public void setY(Double y) {
+    private void setY(Double y) {
         this.y = y;
     }
 
