@@ -3,6 +3,8 @@ package L6.EX4;
 public class Disciplina {
     private String nome;
 
+    public Disciplina(){}
+
     public Disciplina(String nome) {
         this.nome = nome;
     }

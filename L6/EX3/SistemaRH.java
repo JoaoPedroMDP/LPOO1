@@ -36,8 +36,7 @@ public class SistemaRH {
 
     public static void imprimeRelatorio(Funcionario[] funcionarios) {
         for (Funcionario funcionario : funcionarios) {
-            System.out
-                    .println(funcionario.getNome() + " - " + funcionario.getSalario() + " - " + funcionario.getBonus());
+            System.out.println(funcionario.getNome() + " - " + funcionario.getSalario() + " - " + funcionario.getBonus());
         }
     }
 }

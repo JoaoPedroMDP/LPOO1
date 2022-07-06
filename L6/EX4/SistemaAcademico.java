@@ -70,6 +70,7 @@ public class SistemaAcademico {
 
             }
         } while (opcao != 0);
+        sc.close();
     }
 
     private static Aluno retornaAluno(Aluno[] alunos, String nomeAluno) {
@@ -90,6 +91,8 @@ public class SistemaAcademico {
         String matricula = sc.nextLine();
         System.out.println("Digite o curso do aluno: ");
         String curso = sc.nextLine();
+        System.out.println("Digite o endereço do aluno: ");
+        String endereco = sc.nextLine();
         System.out.println("Digite o período do aluno: ");
         Integer periodo = Integer.parseInt(sc.nextLine());
         System.out.println("Digite a idade do aluno: ");
@@ -97,7 +100,7 @@ public class SistemaAcademico {
         System.out.println("Digite a quantidade de disciplinas permitidas para o aluno: ");
         Integer quantidadeDisciplinasPermitidas = Integer.parseInt(sc.nextLine());
 
-        Aluno aluno = new Aluno(nome, matricula, curso, periodo, idade, quantidadeDisciplinasPermitidas);
+        Aluno aluno = new Aluno(nome, matricula, curso, periodo, idade, quantidadeDisciplinasPermitidas, endereco);
 
         for (int i = 0; i < alunos.length; i++) {
             if (alunos[i] == null) {
@@ -117,6 +120,7 @@ public class SistemaAcademico {
                 break;
             }
         }
+        sc.close();
     }
 
     public static Aluno[] listarAlunos(Aluno[] alunos) {
@@ -135,16 +139,21 @@ public class SistemaAcademico {
         String nome = sc.nextLine();
         System.out.println("Digite o nome da disciplina: ");
         String disciplina = sc.nextLine();
+        sc.close();
+
+        Disciplina disciplinaBuffer = new Disciplina();
         for (int i = 0; i < alunos.length; i++) {
             if (alunos[i] != null && alunos[i].getNome().equals(nome)) {
-                return alunos[i].fazMatricula(disciplina);
+                disciplinaBuffer.setNome(disciplina);
+                return alunos[i].fazMatricula(disciplinaBuffer);
             }
         }
         return "Aluno não encontrado";
     }
 
     public static String cancelarMatricula(Aluno aluno, String disciplina) {
-        return aluno.cancelarMatricula(disciplina);
+        Disciplina disciplinaBuffer = new Disciplina(disciplina);
+        return aluno.cancelarMatricula(disciplinaBuffer);
     }
 
     public static String imprimirListaDeAlunoseDisciplinas(Aluno[] alunos) {
@@ -158,7 +167,7 @@ public class SistemaAcademico {
         return lista;
     }
 
-    public static String cadastrarProfessor(Professor[] professores) {
+    public static void cadastrarProfessor(Professor[] professores) {
         Scanner sc = new Scanner(System.in);
         System.out.println("Digite o nome do professor: ");
         String nome = sc.nextLine();
@@ -169,11 +178,12 @@ public class SistemaAcademico {
         System.out.println("Digite a quantidade de disciplinas permitidas para o professor: ");
         Integer quantidadeDisciplinasPermitidas = Integer.parseInt(sc.nextLine());
 
-        Professor professor = new Professor(nome, idade, quantidadeDisciplinasPermitidas, endereco);
+        Professor professor = new Professor(nome, idade, endereco, quantidadeDisciplinasPermitidas);
+        sc.close();
 
-        for (int i = 0; i < alunos.length; i++) {
-            if (alunos[i] == null) {
-                alunos[i] = aluno;
+        for(int i = 0; i < professores.length; i++) {
+            if(professores[i] == null) {
+                professores[i] = professor;
                 break;
             }
         }

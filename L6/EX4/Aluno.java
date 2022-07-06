@@ -23,7 +23,8 @@ public class Aluno extends Pessoa {
 
         for (Integer i = 0; i < this.disciplinasMatriculadas.length; i++) {
             if (this.disciplinasMatriculadas[i] == null) {
-                this.disciplinasMatriculadas[i] = disciplina;
+                Disciplina novaDisciplina = new Disciplina(disciplina.getNome());
+                this.disciplinasMatriculadas[i] = novaDisciplina;
                 return "Matricula na disciplina " + disciplina.getNome() + " executada.";
             }
         }
@@ -57,7 +58,7 @@ public class Aluno extends Pessoa {
     }
 
     public String escreveDisciplinas() {
-        Disciplina disciplinas = "";
+        String disciplinas = "";
         for (Integer i = 0; i < this.disciplinasMatriculadas.length; i++) {
             if (this.disciplinasMatriculadas[i] != null) {
                 disciplinas += " " + this.disciplinasMatriculadas[i].getNome() + ";";
@@ -91,11 +92,11 @@ public class Aluno extends Pessoa {
         this.periodo = periodo;
     }
 
-    public String[] getDisciplinasMatriculadas() {
+    public Disciplina[] getDisciplinasMatriculadas() {
         return this.disciplinasMatriculadas;
     }
 
-    public void setDisciplinasMatriculadas(String[] disciplinasMatriculadas) {
+    public void setDisciplinasMatriculadas(Disciplina[] disciplinasMatriculadas) {
         this.disciplinasMatriculadas = disciplinasMatriculadas;
     }
 

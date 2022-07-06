@@ -1,3 +1,5 @@
+package L6.EX4;
+
 public class Professor extends Pessoa {
     private Disciplina[] disciplinasLecionadas;
 
@@ -11,7 +13,7 @@ public class Professor extends Pessoa {
         this.disciplinasLecionadas = new Disciplina[limiteDeLecionadas];
     }
 
-    public Disciplina getDisciplinasLecionadas() {
+    public Disciplina[] getDisciplinasLecionadas() {
         return this.disciplinasLecionadas;
     }
 
