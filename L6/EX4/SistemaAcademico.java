@@ -1,9 +1,6 @@
 package L6.EX4;
 
-import java.util.Scanner;
-
 public class SistemaAcademico {
-
     public static void mostraMenu() {
         System.out.println("0 - Sair");
         System.out.println("1 - Cadastrar Aluno");
@@ -18,56 +15,54 @@ public class SistemaAcademico {
 
     public static void main(String[] args) {
         Integer quantidadeAlunos = 0, quantidadedeProfessores = 0;
-        Scanner sc = new Scanner(System.in);
+        CustomScanner sc = new CustomScanner();
         System.out.println("Bem vindo ao Sistema Acadêmico");
 
         System.out.println("Digite quantos alunos serão cadastrados: ");
-        quantidadeAlunos = Integer.parseInt(sc.nextLine());
+        quantidadeAlunos = sc.nextInt();
         Aluno[] alunos = new Aluno[quantidadeAlunos];
 
         System.out.println("Digite quantos professores serão cadastrados: ");
-        quantidadedeProfessores = Integer.parseInt(sc.nextLine());
+        quantidadedeProfessores = sc.nextInt();
         Professor[] professores = new Professor[quantidadedeProfessores];
 
         int opcao = 0;
         do {
             mostraMenu();
-            opcao = Integer.parseInt(sc.nextLine());
-            switch (opcao) {
-                case 0:
-                    System.out.println("Saindo do Sistema Acadêmico");
-                    break;
-                case 1:
-                    cadastrarAluno(alunos);
-                    break;
-                case 2:
-                    excluirAluno(alunos);
-                    break;
-                case 3:
-                    listarAlunos(alunos);
-                    break;
-                case 4:
-                    matricularAluno(alunos);
-                    break;
-                case 5:
-                    System.out.println("Digite o nome do aluno: ");
-                    String nome = sc.nextLine();
-                    Aluno aluno = retornaAluno(alunos, nome);
-                    if (aluno == null) {
-                        System.out.println("Aluno não encontrado.");
+            try{
+                opcao = sc.nextInt();
+                System.out.println("Opção escolhida: " + opcao);
+                switch (opcao) {
+                    case 0:
+                        System.out.println("Saindo do Sistema Acadêmico");
                         break;
-                    }
-                    System.out.println("Digite a disciplina: ");
-                    String disciplina = sc.nextLine();
-                    String retorno = cancelarMatricula(aluno, disciplina);
-                    System.out.println(retorno);
-                    break;
-                case 6:
-                    System.out.println(imprimirListaDeAlunoseDisciplinas(alunos));
-                    break;
-                case 7:
-                    cadastrarProfessor(professores);
-
+                    case 1:
+                        System.out.println(cadastrarAluno(alunos));
+                        break;
+                    case 2:
+                        System.out.println(excluirAluno(alunos));
+                        break;
+                    case 3:
+                        System.out.println(listarAlunos(alunos));
+                        break;
+                    case 4:
+                        System.out.println(matricularAluno(alunos));
+                        break;
+                    case 5:
+                        System.out.println(cancelarMatricula(alunos));
+                        break;
+                    case 6:
+                        System.out.println(imprimirListaDeAlunoseDisciplinas(alunos));
+                        break;
+                    case 7:
+                        System.out.println(cadastrarProfessor(professores));
+                        break;
+                    case 8:
+                        System.out.println(adicionarDisciplinaAoProfessor(professores));
+                        break;
+                }    
+            }catch(java.lang.NumberFormatException e){
+                System.out.println("Opção inválida");
             }
         } while (opcao != 0);
         sc.close();
@@ -83,8 +78,8 @@ public class SistemaAcademico {
         return null;
     }
 
-    public static void cadastrarAluno(Aluno[] alunos) {
-        Scanner sc = new Scanner(System.in);
+    public static String cadastrarAluno(Aluno[] alunos) {
+        CustomScanner sc = new CustomScanner();
         System.out.println("Digite o nome do aluno: ");
         String nome = sc.nextLine();
         System.out.println("Digite a matrícula do aluno: ");
@@ -94,33 +89,36 @@ public class SistemaAcademico {
         System.out.println("Digite o endereço do aluno: ");
         String endereco = sc.nextLine();
         System.out.println("Digite o período do aluno: ");
-        Integer periodo = Integer.parseInt(sc.nextLine());
+        Integer periodo = sc.nextInt();
         System.out.println("Digite a idade do aluno: ");
-        Integer idade = Integer.parseInt(sc.nextLine());
+        Integer idade = sc.nextInt();
         System.out.println("Digite a quantidade de disciplinas permitidas para o aluno: ");
-        Integer quantidadeDisciplinasPermitidas = Integer.parseInt(sc.nextLine());
+        Integer quantidadeDisciplinasPermitidas = sc.nextInt();
 
         Aluno aluno = new Aluno(nome, matricula, curso, periodo, idade, quantidadeDisciplinasPermitidas, endereco);
 
         for (int i = 0; i < alunos.length; i++) {
             if (alunos[i] == null) {
                 alunos[i] = aluno;
-                break;
+                return "Aluno cadastrado";
             }
         }
+
+        return "Não foi possível cadastrar o aluno";
     }
 
-    public static void excluirAluno(Aluno[] alunos) {
-        Scanner sc = new Scanner(System.in);
+    public static String excluirAluno(Aluno[] alunos) {
+        CustomScanner sc = new CustomScanner();
         System.out.println("Digite o nome do aluno: ");
         String nome = sc.nextLine();
         for (int i = 0; i < alunos.length; i++) {
             if (alunos[i] != null && alunos[i].getNome().equals(nome)) {
                 alunos[i] = null;
-                break;
+                return "Aluno removido";
             }
         }
-        sc.close();
+
+        return "Aluno não encontrado";
     }
 
     public static Aluno[] listarAlunos(Aluno[] alunos) {
@@ -134,12 +132,11 @@ public class SistemaAcademico {
     }
 
     public static String matricularAluno(Aluno[] alunos) {
-        Scanner sc = new Scanner(System.in);
+        CustomScanner sc = new CustomScanner();
         System.out.println("Digite o nome do aluno: ");
         String nome = sc.nextLine();
         System.out.println("Digite o nome da disciplina: ");
         String disciplina = sc.nextLine();
-        sc.close();
 
         Disciplina disciplinaBuffer = new Disciplina();
         for (int i = 0; i < alunos.length; i++) {
@@ -148,11 +145,23 @@ public class SistemaAcademico {
                 return alunos[i].fazMatricula(disciplinaBuffer);
             }
         }
+
         return "Aluno não encontrado";
     }
 
-    public static String cancelarMatricula(Aluno aluno, String disciplina) {
+    public static String cancelarMatricula(Aluno[] alunos) {
+        CustomScanner sc = new CustomScanner();
+        System.out.println("Digite o nome do aluno: ");
+        String nome = sc.nextLine();
+        Aluno aluno = retornaAluno(alunos, nome);
+        if (aluno == null) {
+            return "Aluno não encontrado.";
+        }
+
+        System.out.println("Digite a disciplina: ");
+        String disciplina = sc.nextLine();
         Disciplina disciplinaBuffer = new Disciplina(disciplina);
+
         return aluno.cancelarMatricula(disciplinaBuffer);
     }
 
@@ -167,25 +176,45 @@ public class SistemaAcademico {
         return lista;
     }
 
-    public static void cadastrarProfessor(Professor[] professores) {
-        Scanner sc = new Scanner(System.in);
+    public static String cadastrarProfessor(Professor[] professores) {
+        CustomScanner sc = new CustomScanner();
         System.out.println("Digite o nome do professor: ");
         String nome = sc.nextLine();
         System.out.println("Digite a idade do professor: ");
-        Integer idade = Integer.parseInt(sc.nextLine());
+        Integer idade = sc.nextInt();
         System.out.println("Digite o endereco do professor: ");
         String endereco = sc.nextLine();
         System.out.println("Digite a quantidade de disciplinas permitidas para o professor: ");
-        Integer quantidadeDisciplinasPermitidas = Integer.parseInt(sc.nextLine());
+        Integer quantidadeDisciplinasPermitidas = sc.nextInt();
 
         Professor professor = new Professor(nome, idade, endereco, quantidadeDisciplinasPermitidas);
-        sc.close();
 
         for(int i = 0; i < professores.length; i++) {
             if(professores[i] == null) {
                 professores[i] = professor;
-                break;
+                return "Professor cadastrado";
             }
         }
+
+        return "Não foi possível cadastrar o professor";
+    }
+
+    private static String adicionarDisciplinaAoProfessor(Professor[] professores) {
+        CustomScanner sc = new CustomScanner();
+        System.out.println("Digite o nome do professor: ");
+        String nome = sc.nextLine();
+        System.out.println("Digite o nome da disciplina: ");
+        String disciplina = sc.nextLine();
+
+        Disciplina disciplinaBuffer = new Disciplina();
+        for (int i = 0; i < professores.length; i++) {
+            if (professores[i] != null && professores[i].getNome().equals(nome)) {
+                disciplinaBuffer.setNome(disciplina);
+                professores[i].adicionaDisciplina(disciplinaBuffer);
+                return "Disciplina adicionada";
+            }
+        }
+
+        return "Professor não encontrado";
     }
 }

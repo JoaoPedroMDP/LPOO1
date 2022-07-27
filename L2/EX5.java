@@ -13,8 +13,9 @@ public class EX5 {
         float alugueisPorMes = 0.3f;
         float precoMulta = 0.1f;
         float multasPorMes = 0.1f;
-
-        System.out.printf("Rentabilidade mensal: R$ %.2f\n", quantidadeDvds * precoAluguel * alugueisPorMes);
+        float rentabilidadeMensal = quantidadeDvds * precoAluguel * alugueisPorMes;
+        System.out.printf("Rentabilidade mensal: R$ %.2f\n", rentabilidadeMensal);
+        System.out.printf("Rentabilidade anual: R$ %.2f\n", rentabilidadeMensal * 12);
         /*
          * O ganho com multas é dado pela quantidade de empréstimos atrasados * preço da
          * multa. A quantidade de empréstimos atrasados é de 10%, de acordo com o

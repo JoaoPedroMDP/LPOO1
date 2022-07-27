@@ -37,7 +37,7 @@ public class Aluno extends Pessoa {
     public String cancelarMatricula(Disciplina disciplina) {
         System.out.println("Removendo [" + disciplina.getNome() + "]");
         for (Integer i = 0; i < this.disciplinasMatriculadas.length; i++) {
-            if (this.disciplinasMatriculadas[i].equals(disciplina)) {
+            if (this.disciplinasMatriculadas[i].getNome().equals(disciplina.getNome())) {
                 this.disciplinasMatriculadas[i] = null;
                 return "Cancelamento da matrícula da disciplina " + disciplina.getNome() + " executado com sucesso.";
             }

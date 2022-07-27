@@ -26,7 +26,7 @@ public class EX3 {
     }
 
     public static void main(String[] args) {
-        List<Float> numeros = pegaValores(3);
+        List<Float> numeros = pegaValores(30);
         Float soma = 0f;
 
         for (Float num : numeros){

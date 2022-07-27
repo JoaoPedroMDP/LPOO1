@@ -5,7 +5,7 @@ import java.util.Scanner;
 public class EX12 {
 
     private static void pegaMatriz(Scanner sc, Float matriz[][]) {
-        for (int i = 0; i < matriz.length; i++) {
+        for (int i = 0; i < matriz[0].length; i++) {
             for (int j = 0; j < matriz[i].length; j++) {
                 matriz[i][j] = sc.nextFloat();
             }
@@ -13,14 +13,21 @@ public class EX12 {
     }
 
     private static Float soma(Float matriz[][], Boolean principal) {
-        if(principal){
-            return matriz[0][0] + matriz[1][1] + matriz[2][2];
-        }else{
-            return matriz[2][0] + matriz[1][1] + matriz[0][2];
+        Float soma = 0f;
+        if (principal) {
+            for (Integer i = 0; i < matriz[0].length; i++) {
+                soma += matriz[i][i];
+            }
+        } else {
+            for (Integer i = 0; i < matriz[0].length; i++) {
+                soma += matriz[matriz.length - i - 1][i];
+            }
         }
+
+        return soma;
     }
 
-    public static void main(String[] args){
+    public static void main(String[] args) {
         Integer dimensao = 0;
         Scanner sc = new Scanner(System.in);
         System.out.println("Digite a dimensão da matriz: ");

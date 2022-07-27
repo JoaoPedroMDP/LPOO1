@@ -16,30 +16,32 @@ public class EX7 {
         Double[] salarioFuncionarios = new Double[numFuncionarios];
 
         Integer i = 0;
-        do{
-            String buffer = "";
-
-            try{
+        String bufferString = "";
+        Double bufferDouble = 0d;
+        do {
+            try {
                 System.out.println("Digite o nome do funcionário:");
-                buffer = sc.nextLine();
-                if(buffer.length() < 3){
+                bufferString = sc.nextLine();
+                if (bufferString.length() < 3) {
                     throw new Exception("Nome inválido");
                 }
-                nomeFuncionarios[i] = buffer;
+                nomeFuncionarios[i] = bufferString;
                 System.out.println("Digite o salário do funcionário:");
-                salarioFuncionarios[i] = Double.parseDouble(sc.nextLine());;
+                bufferDouble = Double.parseDouble(sc.nextLine());
+                salarioFuncionarios[i] = bufferDouble;
                 mediaSalarial += salarioFuncionarios[i];
                 i++;
-            }catch(Exception e){
+            } catch (Exception e) {
                 System.out.println("Insira nome/salario novamente");
             }
-        }while(i < numFuncionarios);
+        } while (i < numFuncionarios);
 
         mediaSalarial /= numFuncionarios;
-
-        for(i = 0; i < numFuncionarios; i++) {
-            if(salarioFuncionarios[i] > mediaSalarial) {
-                System.out.println("O funcionário " + nomeFuncionarios[i] + " (R$ " + salarioFuncionarios[i] + ") tem salário acima da média.");
+        System.out.println("" + mediaSalarial);
+        for (i = 0; i < numFuncionarios; i++) {
+            if (salarioFuncionarios[i] > mediaSalarial) {
+                System.out.println("O funcionário " + nomeFuncionarios[i] + " (R$ " + salarioFuncionarios[i]
+                        + ") tem salário acima da média.");
             }
         }
 
