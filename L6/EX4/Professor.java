@@ -32,4 +32,24 @@ public class Professor extends Pessoa {
 
         return "Não é possível lecionar mais disciplinas";
     }
+
+    public void imprime() {
+        System.out.println("-----------------------------------------------------------------");
+        System.out.println("Nome: " + this.getNome());
+        System.out.println("Idade: " + this.getIdade());
+        System.out.println("Endereço: " + this.getEndereco());
+        System.out.println("Disciplinas lecionadas: " + this.escreveDisciplinas());
+        System.out.println("-----------------------------------------------------------------");
+    }
+
+    public String escreveDisciplinas() {
+        String lista = "";
+        for (int i = 0; i < this.disciplinasLecionadas.length; i++) {
+            if (this.disciplinasLecionadas[i] != null) {
+                lista += this.disciplinasLecionadas[i].getNome() + " ";
+            }
+        }
+
+        return lista;
+    }
 }

@@ -6,6 +6,7 @@ public class Disciplina {
     public Disciplina(){}
 
     public Disciplina(String nome) {
+        
         this.nome = nome;
     }
 

@@ -1,7 +1,13 @@
 package L6.EX4;
 
+import java.util.ArrayList;
+import java.util.Collection;
+
 public class SistemaAcademico {
-    public static void mostraMenu() {
+    Integer quantidadeAlunos = 0, quantidadedeProfessores = 0;
+    CustomScanner sc = new CustomScanner();
+
+    public void mostraMenu() {
         System.out.println("0 - Sair");
         System.out.println("1 - Cadastrar Aluno");
         System.out.println("2 - Excluir Aluno por nome");
@@ -11,26 +17,25 @@ public class SistemaAcademico {
         System.out.println("6 - Imprimir lista Alunos e Disciplinas matriculadas");
         System.out.println("7 - Cadastra professor");
         System.out.println("8 - Adiciona disciplina a um professor");
+        System.out.println("9 - Lista professores e disciplinas");
     }
 
-    public static void main(String[] args) {
-        Integer quantidadeAlunos = 0, quantidadedeProfessores = 0;
-        CustomScanner sc = new CustomScanner();
+    public void sistema() {
         System.out.println("Bem vindo ao Sistema Acadêmico");
 
         System.out.println("Digite quantos alunos serão cadastrados: ");
-        quantidadeAlunos = sc.nextInt();
-        Aluno[] alunos = new Aluno[quantidadeAlunos];
+        this.quantidadeAlunos = this.sc.nextInt();
+        ArrayList<Aluno> alunos = new ArrayList<Aluno>();
 
         System.out.println("Digite quantos professores serão cadastrados: ");
-        quantidadedeProfessores = sc.nextInt();
-        Professor[] professores = new Professor[quantidadedeProfessores];
+        this.quantidadedeProfessores = this.sc.nextInt();
+        ArrayList<Professor> professores = new ArrayList<Professor>();
 
         int opcao = 0;
         do {
             mostraMenu();
-            try{
-                opcao = sc.nextInt();
+            try {
+                opcao = this.sc.nextInt();
                 System.out.println("Opção escolhida: " + opcao);
                 switch (opcao) {
                     case 0:
@@ -60,161 +65,154 @@ public class SistemaAcademico {
                     case 8:
                         System.out.println(adicionarDisciplinaAoProfessor(professores));
                         break;
-                }    
-            }catch(java.lang.NumberFormatException e){
+                    case 9:
+                        System.out.println(listarProfessoreseDisciplinas(professores));
+                        break;
+                }
+            } catch (java.lang.NumberFormatException e) {
                 System.out.println("Opção inválida");
             }
         } while (opcao != 0);
-        sc.close();
+        this.sc.close();
     }
 
-    private static Aluno retornaAluno(Aluno[] alunos, String nomeAluno) {
-        for (int i = 0; i < alunos.length; i++) {
-            if (alunos[i] != null && alunos[i].getNome().equals(nomeAluno)) {
-                return alunos[i];
+    private Aluno retornaAluno(ArrayList<Aluno> alunos, String nomeAluno) {
+        for (Aluno a : alunos) {
+            if (a.getNome().equals(nomeAluno)) {
+                return a;
             }
         }
 
         return null;
     }
 
-    public static String cadastrarAluno(Aluno[] alunos) {
-        CustomScanner sc = new CustomScanner();
+    public String cadastrarAluno(ArrayList<Aluno> alunos) {
+        if (this.quantidadeAlunos == alunos.size()) {
+            return "Limite de alunos atingido!";
+        }
+
         System.out.println("Digite o nome do aluno: ");
-        String nome = sc.nextLine();
+        String nome = this.sc.nextLine();
         System.out.println("Digite a matrícula do aluno: ");
-        String matricula = sc.nextLine();
+        String matricula = this.sc.nextLine();
         System.out.println("Digite o curso do aluno: ");
-        String curso = sc.nextLine();
+        String curso = this.sc.nextLine();
         System.out.println("Digite o endereço do aluno: ");
-        String endereco = sc.nextLine();
+        String endereco = this.sc.nextLine();
         System.out.println("Digite o período do aluno: ");
-        Integer periodo = sc.nextInt();
+        Integer periodo = this.sc.nextInt();
         System.out.println("Digite a idade do aluno: ");
-        Integer idade = sc.nextInt();
+        Integer idade = this.sc.nextInt();
         System.out.println("Digite a quantidade de disciplinas permitidas para o aluno: ");
-        Integer quantidadeDisciplinasPermitidas = sc.nextInt();
+        Integer quantidadeDisciplinasPermitidas = this.sc.nextInt();
 
         Aluno aluno = new Aluno(nome, matricula, curso, periodo, idade, quantidadeDisciplinasPermitidas, endereco);
 
-        for (int i = 0; i < alunos.length; i++) {
-            if (alunos[i] == null) {
-                alunos[i] = aluno;
-                return "Aluno cadastrado";
-            }
-        }
-
-        return "Não foi possível cadastrar o aluno";
+        alunos.add(aluno);
+        return "Aluno cadastrado!";
     }
 
-    public static String excluirAluno(Aluno[] alunos) {
-        CustomScanner sc = new CustomScanner();
+    public String excluirAluno(ArrayList<Aluno> alunos) {
         System.out.println("Digite o nome do aluno: ");
-        String nome = sc.nextLine();
-        for (int i = 0; i < alunos.length; i++) {
-            if (alunos[i] != null && alunos[i].getNome().equals(nome)) {
-                alunos[i] = null;
-                return "Aluno removido";
-            }
-        }
+        String nome = this.sc.nextLine();
 
-        return "Aluno não encontrado";
+        Boolean removed = alunos.removeIf(a -> a.getNome().equals(nome));
+        return removed ? "Aluno removido!" : "Aluno não encontrado!";
     }
 
-    public static Aluno[] listarAlunos(Aluno[] alunos) {
-        for (int i = 0; i < alunos.length; i++) {
-            if (alunos[i] != null) {
-                alunos[i].imprime();
-            }
-        }
-
-        return alunos;
+    public String listarAlunos(ArrayList<Aluno> alunos) {
+        alunos.forEach((a) -> a.imprime());
+        return alunos.size() + " alunos listados.";
     }
 
-    public static String matricularAluno(Aluno[] alunos) {
-        CustomScanner sc = new CustomScanner();
+    public String matricularAluno(ArrayList<Aluno> alunos) {
         System.out.println("Digite o nome do aluno: ");
-        String nome = sc.nextLine();
+        String nome = this.sc.nextLine();
         System.out.println("Digite o nome da disciplina: ");
-        String disciplina = sc.nextLine();
+        String disciplina = this.sc.nextLine();
 
         Disciplina disciplinaBuffer = new Disciplina();
-        for (int i = 0; i < alunos.length; i++) {
-            if (alunos[i] != null && alunos[i].getNome().equals(nome)) {
-                disciplinaBuffer.setNome(disciplina);
-                return alunos[i].fazMatricula(disciplinaBuffer);
+        disciplinaBuffer.setNome(disciplina);
+        for (Aluno a : alunos) {
+            if (a.getNome().equals(nome)) {
+                return a.fazMatricula(disciplinaBuffer);
             }
         }
 
         return "Aluno não encontrado";
     }
 
-    public static String cancelarMatricula(Aluno[] alunos) {
-        CustomScanner sc = new CustomScanner();
+    public String cancelarMatricula(ArrayList<Aluno> alunos) {
         System.out.println("Digite o nome do aluno: ");
-        String nome = sc.nextLine();
+        String nome = this.sc.nextLine();
         Aluno aluno = retornaAluno(alunos, nome);
         if (aluno == null) {
             return "Aluno não encontrado.";
         }
 
         System.out.println("Digite a disciplina: ");
-        String disciplina = sc.nextLine();
+        String disciplina = this.sc.nextLine();
         Disciplina disciplinaBuffer = new Disciplina(disciplina);
 
         return aluno.cancelarMatricula(disciplinaBuffer);
     }
 
-    public static String imprimirListaDeAlunoseDisciplinas(Aluno[] alunos) {
+    public String imprimirListaDeAlunoseDisciplinas(ArrayList<Aluno> alunos) {
         String lista = "";
-        for (int i = 0; i < alunos.length; i++) {
-            if (alunos[i] != null) {
-                lista += "Nome: " + alunos[i].getNome() + "\nDisciplinas: " + alunos[i].escreveDisciplinas() + "\n";
-            }
+
+        for (Aluno a : alunos) {
+            lista += "Nome: " + a.getNome() + "\nDisciplinas: " + a.escreveDisciplinas() + "\n";
         }
 
         return lista;
     }
 
-    public static String cadastrarProfessor(Professor[] professores) {
-        CustomScanner sc = new CustomScanner();
+    public String cadastrarProfessor(ArrayList<Professor> professores) {
+        if (this.quantidadedeProfessores == professores.size()) {
+            return "Limite de professores atingido!";
+        }
+
         System.out.println("Digite o nome do professor: ");
-        String nome = sc.nextLine();
+        String nome = this.sc.nextLine();
         System.out.println("Digite a idade do professor: ");
-        Integer idade = sc.nextInt();
+        Integer idade = this.sc.nextInt();
         System.out.println("Digite o endereco do professor: ");
-        String endereco = sc.nextLine();
+        String endereco = this.sc.nextLine();
         System.out.println("Digite a quantidade de disciplinas permitidas para o professor: ");
-        Integer quantidadeDisciplinasPermitidas = sc.nextInt();
+        Integer quantidadeDisciplinasPermitidas = this.sc.nextInt();
 
         Professor professor = new Professor(nome, idade, endereco, quantidadeDisciplinasPermitidas);
 
-        for(int i = 0; i < professores.length; i++) {
-            if(professores[i] == null) {
-                professores[i] = professor;
-                return "Professor cadastrado";
-            }
-        }
+        professores.add(professor);
 
-        return "Não foi possível cadastrar o professor";
+        return "Professor cadastrado!";
     }
 
-    private static String adicionarDisciplinaAoProfessor(Professor[] professores) {
-        CustomScanner sc = new CustomScanner();
+    private String adicionarDisciplinaAoProfessor(ArrayList<Professor> professores) {
         System.out.println("Digite o nome do professor: ");
-        String nome = sc.nextLine();
+        String nome = this.sc.nextLine();
         System.out.println("Digite o nome da disciplina: ");
-        String disciplina = sc.nextLine();
+        String disciplina = this.sc.nextLine();
 
         Disciplina disciplinaBuffer = new Disciplina();
-        for (int i = 0; i < professores.length; i++) {
-            if (professores[i] != null && professores[i].getNome().equals(nome)) {
-                disciplinaBuffer.setNome(disciplina);
-                professores[i].adicionaDisciplina(disciplinaBuffer);
-                return "Disciplina adicionada";
+        disciplinaBuffer.setNome(disciplina);
+
+        for (Professor p : professores) {
+            if (p.getNome().equals(nome)) {
+                return p.adicionaDisciplina(disciplinaBuffer);
             }
         }
 
         return "Professor não encontrado";
+    }
+
+    private String listarProfessoreseDisciplinas(ArrayList<Professor> professores) {
+        for (Professor prof : professores) {
+            if (prof != null) {
+                prof.imprime();
+            }
+        }
+
+        return professores.size() + " professores listados.";
     }
 }
