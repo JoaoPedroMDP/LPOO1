@@ -1,4 +1,4 @@
-
+package L7.EX2;
 
 public class InvalidMarch extends Exception {
     public InvalidMarch(int march) {

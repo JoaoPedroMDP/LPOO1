@@ -1,4 +1,4 @@
-
+package L7.EX2;
 
 public class InvalidSpeed extends Exception {
     public InvalidSpeed(int velocidade){

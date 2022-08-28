@@ -1,4 +1,6 @@
-class Bicicleta {
+package L7.EX2;
+
+public class Bicicleta {
     int cadencia = 0;
     int velocidade = 0;
     int marcha = 1;

@@ -1,3 +1,4 @@
+package L7.EX2;
 public class UsaBicicleta {
     public static void main(String[] args) {
         try {

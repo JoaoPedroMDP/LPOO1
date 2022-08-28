@@ -1,4 +1,4 @@
-
+package L7.EX2;
 
 public class InvalidRpm extends Exception {
     public InvalidRpm(int rpm) {
